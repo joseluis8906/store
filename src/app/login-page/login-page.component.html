@@ -1,0 +1,7 @@
+<pre>
+  {{ login$ | async | json }}
+</pre>
+<br>
+<input type="text" [formControl]="username" placeholder="usernmae"><br>
+<input type="text" [formControl]="password" placeholder="password"><br>
+<button (click)="login()">Login</button>
