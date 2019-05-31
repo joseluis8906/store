@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { Login } from '../login-page.action';
+import { LoginAction, LoadDataAction } from '../login-page.action';
 import { FormControl } from '@angular/forms';
+import { Login } from '../login.model';
 
 @Component({
   selector: 'app-login-page',
@@ -16,7 +17,7 @@ export class LoginPageComponent implements OnInit {
 
   login$: Observable<{username: string, password: string}>;
 
-  constructor(private store: Store<{username: string, password: string}>) {
+  constructor(private store: Store<Login>) {
     this.login$ = this.store.pipe(select('login'));
 
     this.username = new FormControl('');
@@ -24,10 +25,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new LoadDataAction());
   }
 
   login() {
-    this.store.dispatch(new Login({username: this.username.value, password: this.password.value}));
+    this.store.dispatch(new LoginAction({username: this.username.value, password: this.password.value}));
   }
-
 }
